@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj": {}
+    "D:\\dotnet\\OrderSystem\\src\\OrderService\\OrderService.csproj": {}
   },
   "projects": {
-    "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj": {
+    "D:\\dotnet\\OrderSystem\\src\\OrderService\\OrderService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj",
+        "projectUniqueName": "D:\\dotnet\\OrderSystem\\src\\OrderService\\OrderService.csproj",
         "projectName": "OrderService",
-        "projectPath": "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj",
+        "projectPath": "D:\\dotnet\\OrderSystem\\src\\OrderService\\OrderService.csproj",
         "packagesPath": "C:\\Users\\SWD\\.nuget\\packages\\",
-        "outputPath": "D:\\dotnet\\ProductSale\\src\\OrderService\\obj\\",
+        "outputPath": "D:\\dotnet\\OrderSystem\\src\\OrderService\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -34,8 +34,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj": {
-                "projectPath": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj"
+              "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj": {
+                "projectPath": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj"
               }
             }
           }
@@ -503,14 +503,14 @@
         }
       }
     },
-    "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj": {
+    "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj",
+        "projectUniqueName": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj",
         "projectName": "SharedEvents",
-        "projectPath": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj",
+        "projectPath": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj",
         "packagesPath": "C:\\Users\\SWD\\.nuget\\packages\\",
-        "outputPath": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\obj\\",
+        "outputPath": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

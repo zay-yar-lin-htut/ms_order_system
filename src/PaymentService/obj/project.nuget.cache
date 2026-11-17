@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "sn3wTXG72ME=",
+  "dgSpecHash": "B6W/eOV82sg=",
   "success": true,
-  "projectFilePath": "D:\\dotnet\\ProductSale\\src\\PaymentService\\PaymentService.csproj",
+  "projectFilePath": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\PaymentService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.0\\microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
     "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
@@ -17,9 +17,9 @@
       "code": "NU1902",
       "level": "Warning",
       "message": "Package 'MySqlConnector' 2.4.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-473q-m89c-ghf8",
-      "projectPath": "D:\\dotnet\\ProductSale\\src\\PaymentService\\PaymentService.csproj",
+      "projectPath": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\PaymentService.csproj",
       "warningLevel": 1,
-      "filePath": "D:\\dotnet\\ProductSale\\src\\PaymentService\\PaymentService.csproj",
+      "filePath": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\PaymentService.csproj",
       "libraryId": "MySqlConnector",
       "targetGraphs": [
         "net10.0"

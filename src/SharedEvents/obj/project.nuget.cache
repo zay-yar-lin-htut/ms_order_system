@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3LeghcsWzkk=",
+  "dgSpecHash": "fbJPEV4tHso=",
   "success": true,
-  "projectFilePath": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj",
+  "projectFilePath": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

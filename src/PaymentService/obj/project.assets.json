@@ -251,11 +251,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\dotnet\\ProductSale\\src\\PaymentService\\PaymentService.csproj",
+      "projectUniqueName": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\PaymentService.csproj",
       "projectName": "PaymentService",
-      "projectPath": "D:\\dotnet\\ProductSale\\src\\PaymentService\\PaymentService.csproj",
+      "projectPath": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\PaymentService.csproj",
       "packagesPath": "C:\\Users\\SWD\\.nuget\\packages\\",
-      "outputPath": "D:\\dotnet\\ProductSale\\src\\PaymentService\\obj\\",
+      "outputPath": "D:\\dotnet\\OrderSystem\\src\\PaymentService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -278,8 +278,8 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj": {
-              "projectPath": "D:\\dotnet\\ProductSale\\src\\SharedEvents\\SharedEvents.csproj"
+            "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj": {
+              "projectPath": "D:\\dotnet\\OrderSystem\\src\\SharedEvents\\SharedEvents.csproj"
             }
           }
         }
