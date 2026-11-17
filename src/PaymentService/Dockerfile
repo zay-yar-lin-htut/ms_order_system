@@ -11,7 +11,7 @@ RUN dotnet restore src/PaymentService/PaymentService.csproj
 COPY src/SharedEvents/ src/SharedEvents/
 COPY src/PaymentService/ src/PaymentService/
 WORKDIR /app/src/PaymentService
-RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN dotnet publish -c Release -o /app/publish 
 
 # Runtime stage (optimized for low memory)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime

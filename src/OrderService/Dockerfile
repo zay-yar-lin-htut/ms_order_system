@@ -11,7 +11,7 @@ RUN dotnet restore src/OrderService/OrderService.csproj
 COPY src/SharedEvents/ src/SharedEvents/
 COPY src/OrderService/ src/OrderService/
 WORKDIR /app/src/OrderService
-RUN dotnet publish -c Release -o /app/publish --no-restore
+RUN dotnet publish -c Release -o /app/publish 
 
 # Runtime stage (optimized for low memory)
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
