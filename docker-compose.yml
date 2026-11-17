@@ -1,0 +1,76 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+
+  mysql:
+    image: mariadb:10.11-alpine
+    container_name: mysql
+    restart: unless-stopped
+    command: >
+      --innodb_buffer_pool_size=32M
+      --performance_schema=OFF
+      --max_connections=50
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+
+  order-service:
+    build:
+      context: .
+      dockerfile: src/OrderService/Dockerfile
+    container_name: order-service
+    restart: unless-stopped
+    ports:
+      - "5001:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=order_db;User=root;Password=rootpassword;"
+      RabbitMQ__Host: "rabbitmq"
+    depends_on:
+      - rabbitmq
+      - mysql
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: src/PaymentService/Dockerfile
+    container_name: payment-service
+    restart: unless-stopped
+    ports:
+      - "5002:8080"
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mysql;Port=3306;Database=payment_db;User=root;Password=rootpassword;"
+      RabbitMQ__Host: "rabbitmq"
+    depends_on:
+      - rabbitmq
+      - mysql
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+
+volumes:
+  mysql_data:

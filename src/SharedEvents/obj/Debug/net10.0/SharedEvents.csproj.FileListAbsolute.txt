@@ -1,0 +1,11 @@
+D:\dotnet\ProductSale\src\SharedEvents\bin\Debug\net10.0\SharedEvents.deps.json
+D:\dotnet\ProductSale\src\SharedEvents\bin\Debug\net10.0\SharedEvents.dll
+D:\dotnet\ProductSale\src\SharedEvents\bin\Debug\net10.0\SharedEvents.pdb
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.GeneratedMSBuildEditorConfig.editorconfig
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.AssemblyInfoInputs.cache
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.AssemblyInfo.cs
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.csproj.CoreCompileInputs.cache
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.dll
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\refint\SharedEvents.dll
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\SharedEvents.pdb
+D:\dotnet\ProductSale\src\SharedEvents\obj\Debug\net10.0\ref\SharedEvents.dll

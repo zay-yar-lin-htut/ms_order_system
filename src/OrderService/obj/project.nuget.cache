@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "dgSpecHash": "kho7J+tUMyg=",
+  "success": true,
+  "projectFilePath": "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.0\\microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.0\\microsoft.entityframeworkcore.analyzers.9.0.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.0\\microsoft.entityframeworkcore.relational.9.0.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\mysqlconnector\\2.4.0\\mysqlconnector.2.4.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\9.0.0\\pomelo.entityframeworkcore.mysql.9.0.0.nupkg.sha512",
+    "C:\\Users\\SWD\\.nuget\\packages\\rabbitmq.client\\7.2.2\\rabbitmq.client.7.2.2.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'MySqlConnector' 2.4.0 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-473q-m89c-ghf8",
+      "projectPath": "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\dotnet\\ProductSale\\src\\OrderService\\OrderService.csproj",
+      "libraryId": "MySqlConnector",
+      "targetGraphs": [
+        "net10.0"
+      ]
+    }
+  ]
+}
