@@ -1,4 +1,4 @@
-name: Build and Deploy Microservices
+name: Build and Deploy to K8s
 
 on:
   push:
@@ -6,9 +6,11 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_PREFIX: ${{ github.repository_owner }}
 
 jobs:
+  # ========================================================
+  # 1. CI Phase: Build & Push Images to GHCR
+  # ========================================================
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
@@ -18,6 +20,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set lower case repository owner
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_ENV}
+        env:
+          OWNER: '${{ github.repository_owner }}'
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -32,7 +40,7 @@ jobs:
           context: .
           file: src/OrderService/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/order-service:latest
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/order-service:latest
 
       - name: Build & Push PaymentService
         uses: docker/build-push-action@v5
@@ -40,23 +48,48 @@ jobs:
           context: .
           file: src/PaymentService/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/payment-service:latest
+          tags: ${{ env.REGISTRY }}/${{ env.OWNER_LC }}/payment-service:latest
 
-  deploy-to-server:
+  # ========================================================
+  # 2. CD Phase: Deploy to K3s (Kubernetes) on 1GB Server
+  # ========================================================
+  deploy-to-k8s:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: SSH and Deploy to 1GB Server
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy K8s manifests to Server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "k8s/app-deployments.yaml"
+          target: "~/ProductSale"
+
+      - name: SSH and Apply K8s Manifests
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            # If using Docker Compose:
-            cd ~/ProductSale
-            docker compose pull
-            docker compose up -d
+            mkdir -p ~/ProductSale/k8s
 
-            # Or if using k3s:
-            # kubectl rollout restart deployment order-service payment-service
+            # Create GHCR Image Pull Secret in microservices namespace so K8s can pull private images
+            kubectl create namespace microservices --dry-run=client -o yaml | kubectl apply -f -
+            kubectl create secret docker-registry ghcr-secret \
+              --namespace=microservices \
+              --docker-server=ghcr.io \
+              --docker-username="${{ github.actor }}" \
+              --docker-password="${{ secrets.GITHUB_TOKEN }}" \
+              --dry-run=client -o yaml | kubectl apply -f -
+
+            # Apply K8s Deployment and Services
+            kubectl apply -f ~/ProductSale/k8s/app-deployments.yaml
+
+            # Rollout restart to pull latest image
+            kubectl rollout restart deployment/order-service -n microservices
+            kubectl rollout restart deployment/payment-service -n microservices

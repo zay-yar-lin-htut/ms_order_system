@@ -1,7 +1,15 @@
+# 1. Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: microservices
+---
+# 2. RabbitMQ Deployment & Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rabbitmq
+  namespace: microservices
 spec:
   replicas: 1
   selector:
@@ -14,32 +22,42 @@ spec:
     spec:
       containers:
         - name: rabbitmq
-          image: rabbitmq:3-alpine
+          image: rabbitmq:3-management-alpine
           resources:
             requests:
-              memory: "100Mi"
-              cpu: "50m"
+              memory: "80Mi"
+              cpu: "30m"
             limits:
-              memory: "200Mi"
-              cpu: "200m"
+              memory: "180Mi"
+              cpu: "150m"
           ports:
             - containerPort: 5672
+            - containerPort: 15672
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: rabbitmq
+  namespace: microservices
 spec:
   selector:
     app: rabbitmq
   ports:
-    - port: 5672
+    - name: amqp
+      port: 5672
       targetPort: 5672
+    - name: management
+      port: 15672
+      targetPort: 15672
+      nodePort: 31672
+  type: NodePort
 ---
+# 3. MySQL 8.0 Deployment & Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
+  namespace: microservices
 spec:
   replicas: 1
   selector:
@@ -52,17 +70,22 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mariadb:10.11-alpine
-          args: ["--innodb_buffer_pool_size=32M", "--performance_schema=OFF", "--max_connections=50"]
+          image: mysql:8.0
+          args:
+            - "--innodb_buffer_pool_size=48M"
+            - "--performance_schema=OFF"
+            - "--max_connections=40"
+            - "--character-set-server=utf8mb4"
+            - "--collation-server=utf8mb4_unicode_ci"
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "rootpassword"
           resources:
             requests:
-              memory: "100Mi"
+              memory: "150Mi"
               cpu: "50m"
             limits:
-              memory: "200Mi"
+              memory: "280Mi"
               cpu: "200m"
           ports:
             - containerPort: 3306
@@ -71,6 +94,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: microservices
 spec:
   selector:
     app: mysql
@@ -78,10 +102,12 @@ spec:
     - port: 3306
       targetPort: 3306
 ---
+# 4. Order Service Deployment & NodePort Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-service
+  namespace: microservices
 spec:
   replicas: 1
   selector:
@@ -94,30 +120,34 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: ghcr.io/YOUR_GITHUB_USERNAME/order-service:latest
+          image: ghcr.io/zay-yar-lin-htut/order-service:latest
+          imagePullPolicy: Always
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=mysql;Port=3306;Database=order_db;User=root;Password=rootpassword;"
+              value: "Server=mysql.microservices.svc.cluster.local;Port=3306;Database=order_db;User=root;Password=rootpassword;"
             - name: RabbitMQ__Host
-              value: "rabbitmq"
+              value: "rabbitmq.microservices.svc.cluster.local"
           resources:
             requests:
-              memory: "50Mi"
-              cpu: "25m"
+              memory: "40Mi"
+              cpu: "20m"
             limits:
-              memory: "100Mi"
-              cpu: "150m"
+              memory: "90Mi"
+              cpu: "100m"
           livenessProbe:
             httpGet:
               path: /health
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: order-service
+  namespace: microservices
 spec:
   type: NodePort
   selector:
@@ -127,10 +157,12 @@ spec:
       targetPort: 8080
       nodePort: 30001
 ---
+# 5. Payment Service Deployment & NodePort Service
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment-service
+  namespace: microservices
 spec:
   replicas: 1
   selector:
@@ -143,30 +175,34 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: ghcr.io/YOUR_GITHUB_USERNAME/payment-service:latest
+          image: ghcr.io/zay-yar-lin-htut/payment-service:latest
+          imagePullPolicy: Always
           env:
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=mysql;Port=3306;Database=payment_db;User=root;Password=rootpassword;"
+              value: "Server=mysql.microservices.svc.cluster.local;Port=3306;Database=payment_db;User=root;Password=rootpassword;"
             - name: RabbitMQ__Host
-              value: "rabbitmq"
+              value: "rabbitmq.microservices.svc.cluster.local"
           resources:
             requests:
-              memory: "50Mi"
-              cpu: "25m"
+              memory: "40Mi"
+              cpu: "20m"
             limits:
-              memory: "100Mi"
-              cpu: "150m"
+              memory: "90Mi"
+              cpu: "100m"
           livenessProbe:
             httpGet:
               path: /health
               port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 20
+            initialDelaySeconds: 20
+            periodSeconds: 15
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: payment-service
+  namespace: microservices
 spec:
   type: NodePort
   selector:
